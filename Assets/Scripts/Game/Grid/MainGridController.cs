@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.GridCell;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Grid
@@ -7,30 +8,33 @@ namespace Assets.Scripts.Game.Grid
     {
         public GridCellController[,] Cells;
 
-        public void DestroyBlock()
+        public List<GridCellController> GetBlocksDestroy()
         {
             int rows = Cells.GetLength(0);
             int columns = Cells.GetLength(1);
 
+            List<GridCellController> targetCells = new List<GridCellController>();
+            List<GridCellController> filledRowCells = new List<GridCellController>();
+            List<GridCellController> filledColumnCells = new List<GridCellController>();
+
             for (int row = 0; row < rows; row++)
             {
-                bool IfCellFilled = true;
+                bool isRowFilled = true;
 
                 for (int col = 0; col < columns; col++)
                 {
                     if (Cells[row, col].State == GridCell.GridCellState.Out)
                     {
-                        IfCellFilled = false;
+                        isRowFilled = false;
                         break;
                     }
                 }
 
-                if (IfCellFilled)
+                if (isRowFilled)
                 {
                     for (int col = 0; col < columns; col++)
                     {
-                        print(IfCellFilled);
-                        Cells[row, col].DestroyBlock();
+                        filledRowCells.Add(Cells[row, col]);
                     }
                 }
             }
@@ -38,6 +42,7 @@ namespace Assets.Scripts.Game.Grid
             for (int col = 0; col < columns; col++)
             {
                 bool isColumnFilled = true;
+
                 for (int row = 0; row < rows; row++)
                 {
                     if (Cells[row, col].State == GridCell.GridCellState.Out)
@@ -46,15 +51,22 @@ namespace Assets.Scripts.Game.Grid
                         break;
                     }
                 }
+
                 if (isColumnFilled)
                 {
                     for (int row = 0; row < rows; row++)
                     {
-                        Cells[row, col].DestroyBlock();
+                        filledColumnCells.Add(Cells[row, col]);
                     }
                 }
             }
+
+            targetCells.AddRange(filledRowCells);
+            targetCells.AddRange(filledColumnCells);
+
+            return targetCells;
         }
+
 
         public bool IsLevelPassAble(int width, int height)
         {
@@ -86,7 +98,6 @@ namespace Assets.Scripts.Game.Grid
                         }
                     }
 
-
                     if (isSuitable)
                     {
                         return true;
@@ -95,8 +106,6 @@ namespace Assets.Scripts.Game.Grid
             }
 
             return false;
-
         }
-
     }
 }

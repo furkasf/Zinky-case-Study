@@ -43,11 +43,9 @@ namespace Assets.Scripts.Game.MyInput
 
             if (Physics.Raycast(ray, out hit))
             {
-                print(hit.transform.gameObject);
                 if (hit.transform.parent.TryGetComponent(out BlockManager blockManager))
                 {
-                    _blockManager = (blockManager.State == Assets.Scripts.Game.Block.BlockState.UnSnap) ? blockManager : null;
-                    print(blockManager.gameObject);
+                    _blockManager = (blockManager.State == BlockState.UnSnap) ? blockManager : null;
                 }
             }
             else
@@ -69,7 +67,6 @@ namespace Assets.Scripts.Game.MyInput
         private void DropBlock()
         {
             if (_blockManager == null) return;
-
 
             _blockManager.SnapBlocks();
             _blockManager = null;

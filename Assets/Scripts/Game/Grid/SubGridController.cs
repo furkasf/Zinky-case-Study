@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Game.GridCell;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Grid
@@ -7,20 +8,24 @@ namespace Assets.Scripts.Game.Grid
     {
         public GridCellController[,] Cells;
 
-        public void DestroyBlock()
+        public List<GridCellController> GetBlocksDestroy()
         {
+            List<GridCellController> targetCells = new List<GridCellController>();
+
             foreach (var cell in Cells)
             {
                 if (cell.State == GridCell.GridCellState.Out)
                 {
-                    return;
+                    return null;
                 }
             }
 
             foreach (var cell in Cells)
             {
-                cell.DestroyBlock();
+                targetCells.Add(cell);
             }
+
+            return targetCells;
         }
     }
 }

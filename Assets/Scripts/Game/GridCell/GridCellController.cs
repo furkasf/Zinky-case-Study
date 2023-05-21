@@ -10,43 +10,61 @@ namespace Assets.Scripts.Game.GridCell
         [field: SerializeField]
         public GridCellState State { get; private set; }
 
-        private BlockController _blockController = null;
+        private BlockController _snapBlock;
 
         private void Awake()
         {
             State = GridCellState.Out;
+            _snapBlock = null;
         }
 
         private void OnEnable()
         {
-            LevelSignal.onLevelReset += DestroyBlock;
+            LevelSignal.onLevelReset += ResetBlock;
         }
 
         private void OnDisable()
         {
-            LevelSignal.onLevelReset -= DestroyBlock;
+            LevelSignal.onLevelReset -= ResetBlock;
         }
 
         public void DestroyBlock()
         {
-            if (_blockController != null)
-            {
-                GameObject.Destroy(_blockController.gameObject);
-                _blockController = null;
-                StartCoroutine(InitBlocksStateDelay());
-            }
+            StartCoroutine(InitDestroyableBlocks());
         }
 
-        private IEnumerator InitBlocksStateDelay()
+        private IEnumerator InitDestroyableBlocks()
         {
-            yield return new WaitForSecondsRealtime(1f);
-            State = GridCellState.Out;
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            if (_snapBlock != null)
+            {
+                GameObject.Destroy(_snapBlock.transform.gameObject);
+                _snapBlock = null;
+                State = GridCellState.Out;
+            }
+
+            if (_snapBlock == null)
+            {
+                State = GridCellState.Out;
+            }
+            yield return null;
         }
 
         public void AttachToBlock(BlockController block)
         {
-            _blockController = block;
+            _snapBlock = block;
             State = GridCellState.In;
+        }
+
+        private void ResetBlock()
+        {
+            if (_snapBlock != null)
+            {
+                GameObject.Destroy(_snapBlock.transform.parent.gameObject);
+                _snapBlock = null;
+            }
+            State = GridCellState.Out;
         }
     }
 }

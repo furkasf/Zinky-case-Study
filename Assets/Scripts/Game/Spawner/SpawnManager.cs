@@ -91,9 +91,12 @@ namespace Assets.Scripts.Game.Spawner
         {
             foreach (var bloc in GetBlockManagers())
             {
-                Destroy(bloc);
+                Destroy(bloc.gameObject);
             }
-            SpawnNewBlock();
+            foreach (var Spawner in spawnControllers)
+            {
+                Spawner.SpawnBlocks();
+            }
         }
     }
 }

@@ -1,7 +1,9 @@
 using Assets.Scripts.Game.Block;
+using Assets.Scripts.Game.GridCell;
 using Assets.Scripts.Game.Level;
 using Assets.Scripts.Game.Spawner;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.Grid
@@ -44,9 +46,24 @@ namespace Assets.Scripts.Game.Grid
 
         public void DestroyDestroyableBlocks()
         {
-            foreach (var grid in Grids)
+            List<GridCellController> targets = new List<GridCellController>();
+
+            foreach(IGrid grid in Grids)
             {
-                grid.DestroyBlock();
+                List<GridCellController> gridTargetCell = grid.GetBlocksDestroy();
+
+                if(gridTargetCell != null)
+                {
+                    targets.AddRange(gridTargetCell);
+                }
+
+            }
+
+            var filteredList = targets.Distinct().ToList();
+
+            foreach(var target in filteredList)
+            {
+                target.DestroyBlock();
             }
         }
     }
