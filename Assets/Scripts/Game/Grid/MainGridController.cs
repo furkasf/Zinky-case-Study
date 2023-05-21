@@ -5,12 +5,12 @@ namespace Assets.Scripts.Game.Grid
 {
     public class MainGridController : MonoBehaviour, IGrid, IGridPassable
     {
-        public GridCellController[,] cells;
+        public GridCellController[,] Cells;
 
         public void DestroyBlock()
         {
-            int rows = cells.GetLength(0);
-            int columns = cells.GetLength(1);
+            int rows = Cells.GetLength(0);
+            int columns = Cells.GetLength(1);
 
             for (int row = 0; row < rows; row++)
             {
@@ -18,7 +18,7 @@ namespace Assets.Scripts.Game.Grid
 
                 for (int col = 0; col < columns; col++)
                 {
-                    if (cells[row, col].State == GridCell.GridCellState.Out)
+                    if (Cells[row, col].State == GridCell.GridCellState.Out)
                     {
                         IfCellFilled = false;
                         break;
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Game.Grid
                     for (int col = 0; col < columns; col++)
                     {
                         print(IfCellFilled);
-                        cells[row, col].DestroyBlock();
+                        Cells[row, col].DestroyBlock();
                     }
                 }
             }
@@ -40,7 +40,7 @@ namespace Assets.Scripts.Game.Grid
                 bool isColumnFilled = true;
                 for (int row = 0; row < rows; row++)
                 {
-                    if (cells[row, col].State == GridCell.GridCellState.Out)
+                    if (Cells[row, col].State == GridCell.GridCellState.Out)
                     {
                         isColumnFilled = false;
                         break;
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Game.Grid
                 {
                     for (int row = 0; row < rows; row++)
                     {
-                        cells[row, col].DestroyBlock();
+                        Cells[row, col].DestroyBlock();
                     }
                 }
             }
@@ -58,8 +58,8 @@ namespace Assets.Scripts.Game.Grid
 
         public bool IsLevelPassAble(int width, int height)
         {
-            int gridWidth = cells.GetLength(0);
-            int gridHeight = cells.GetLength(1);
+            int gridWidth = Cells.GetLength(0);
+            int gridHeight = Cells.GetLength(1);
 
             for (int row = 0; row < gridHeight - width; row++)
             {
@@ -71,7 +71,7 @@ namespace Assets.Scripts.Game.Grid
                     {
                         for (int startY = 0; startY < height; startY++)
                         {
-                            var gridCell = cells[row + startX, col + startY];
+                            var gridCell = Cells[row + startX, col + startY];
 
                             if (gridCell.State == GridCellState.In)
                             {

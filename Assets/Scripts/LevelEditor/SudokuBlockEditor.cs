@@ -23,11 +23,11 @@ public class SudokuBlockEditor : MonoBehaviour
     public void SudokuGenerator()
     {
         GameObject gridManager = CreateNewGameObject("GridManager");
-        GridManager manger = gridManager.AddComponent<GridManager>();
+        GridManager manager = gridManager.AddComponent<GridManager>();
 
         GameObject mainGridController = CreateNewGameObject("MainGridController", gridManager.transform);
         MainGridController mainGrid = mainGridController.AddComponent<MainGridController>();
-        mainGrid.cells = new GridCellController[Width, Height];
+        mainGrid.Cells = new GridCellController[Width, Height];
 
         for (int i = 0; i < Height; i++)
         {
@@ -35,14 +35,14 @@ public class SudokuBlockEditor : MonoBehaviour
             {
                 GameObject CellGrid = Instantiate(GridCellPrefab, gridManager.transform);
                 CellGrid.transform.position = new Vector3(i * Scale, j * Scale, 0f);
-                mainGridController.GetComponent<MainGridController>().cells[i, j] = CellGrid.GetComponent<GridCellController>();
+                mainGridController.GetComponent<MainGridController>().Cells[i, j] = CellGrid.GetComponent<GridCellController>();
             }
         }
 
-        manger.Grids.Add(mainGrid);
-        manger.GridPassable = mainGrid;
+        manager.Grids.Add(mainGrid);
+        manager.GridPassable = mainGrid;
         
-        DivideSudokuIntoSubGrids(ref mainGrid, ref manger);
+        DivideSudokuIntoSubGrids(ref mainGrid, ref manager);
     }
 
     private void DivideSudokuIntoSubGrids(ref MainGridController mainGrid, ref GridManager manager)
@@ -54,13 +54,13 @@ public class SudokuBlockEditor : MonoBehaviour
                 GameObject subGridController = CreateNewGameObject("SubGridController", manager.transform);//can be add parent
                 SubGridController subgrid = subGridController.AddComponent<SubGridController>();
 
-                subgrid.cells = new GridCellController[3, 3];
+                subgrid.Cells = new GridCellController[3, 3];
 
                 for (int x = 0; x < 3; x++)
                 {
                     for (int y = 0; y < 3; y++)
                     {
-                        subgrid.cells[x, y] = mainGrid.cells[i * 3 + x, j * 3 + y];
+                        subgrid.Cells[x, y] = mainGrid.Cells[i * 3 + x, j * 3 + y];
                     }
                 }
                 manager.Grids.Add(subgrid);

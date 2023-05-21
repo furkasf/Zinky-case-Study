@@ -5,11 +5,11 @@ namespace Assets.Scripts.Game.Grid
 {
     public class SubGridController : MonoBehaviour, IGrid
     {
-        public GridCellController[,] cells;
+        public GridCellController[,] Cells;
 
         public void DestroyBlock()
         {
-            foreach (var cell in cells)
+            foreach (var cell in Cells)
             {
                 if (cell.State == GridCell.GridCellState.Out)
                 {
@@ -17,7 +17,7 @@ namespace Assets.Scripts.Game.Grid
                 }
             }
 
-            foreach (var cell in cells)
+            foreach (var cell in Cells)
             {
                 cell.DestroyBlock();
             }
