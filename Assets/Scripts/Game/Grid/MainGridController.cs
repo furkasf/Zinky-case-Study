@@ -23,7 +23,7 @@ namespace Assets.Scripts.Game.Grid
 
                 for (int col = 0; col < columns; col++)
                 {
-                    if (Cells[row, col].State == GridCell.GridCellState.Out)
+                    if (Cells[row, col].State == GridCellState.Out)
                     {
                         isRowFilled = false;
                         break;
@@ -66,7 +66,6 @@ namespace Assets.Scripts.Game.Grid
 
             return targetCells;
         }
-
 
         public bool IsLevelPassAble(int width, int height)
         {

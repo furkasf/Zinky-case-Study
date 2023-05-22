@@ -1,5 +1,5 @@
 using Assets.Scripts.Game.Block;
-using Assets.Scripts.Game.Level;
+using Game.Events;
 using System.Collections;
 using UnityEngine;
 
@@ -7,7 +7,6 @@ namespace Assets.Scripts.Game.GridCell
 {
     public class GridCellController : MonoBehaviour
     {
-        [field: SerializeField]
         public GridCellState State { get; private set; }
 
         private BlockController _snapBlock;
@@ -39,7 +38,7 @@ namespace Assets.Scripts.Game.GridCell
 
             if (_snapBlock != null)
             {
-                GameObject.Destroy(_snapBlock.transform.gameObject);
+                Destroy(_snapBlock.transform.gameObject);
                 _snapBlock = null;
                 State = GridCellState.Out;
             }
@@ -61,7 +60,7 @@ namespace Assets.Scripts.Game.GridCell
         {
             if (_snapBlock != null)
             {
-                GameObject.Destroy(_snapBlock.transform.parent.gameObject);
+                Destroy(_snapBlock.transform.parent.gameObject);
                 _snapBlock = null;
             }
             State = GridCellState.Out;

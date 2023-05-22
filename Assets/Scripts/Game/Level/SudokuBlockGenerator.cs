@@ -6,19 +6,16 @@ namespace Assets.Scripts.Game.Level
 {
     public class SudokuBlockGenerator : MonoBehaviour
     {
-        public int Width;
-        public int Height;
-        public float Scale;
+        [SerializeField] private int Width;
+        [SerializeField] private int Height;
+        [SerializeField] private float Scale;
 
         [Space]
-        public GameObject GridCellPrefab;
+        [SerializeField] private GameObject GridCellPrefab;
 
         private void Awake()
         {
-            if (transform.childCount == 0)
-            {
-                SudokuGenerator();
-            }
+            SudokuGenerator();
         }
 
         public void SudokuGenerator()
@@ -34,9 +31,9 @@ namespace Assets.Scripts.Game.Level
             {
                 for (int j = 0; j < Width; j++)
                 {
-                    GameObject CellGrid = Instantiate(GridCellPrefab, gridManager.transform);
-                    CellGrid.transform.position = new Vector3(i * Scale, j * Scale, 0f);
-                    mainGridController.GetComponent<MainGridController>().Cells[i, j] = CellGrid.GetComponent<GridCellController>();
+                    GameObject cellGrid = Instantiate(GridCellPrefab, gridManager.transform);
+                    cellGrid.transform.position = new Vector3(i * Scale, j * Scale, 0f);
+                    mainGridController.GetComponent<MainGridController>().Cells[i, j] = cellGrid.GetComponent<GridCellController>();
                 }
             }
 
@@ -72,12 +69,12 @@ namespace Assets.Scripts.Game.Level
         private GameObject CreateNewGameObject(string name)
         {
             GameObject emptyObject = new GameObject("EmptyObject");
+            Transform emptyObjTransform = emptyObject.transform;
 
-            emptyObject.transform.SetParent(transform);
-
-            emptyObject.transform.position = Vector3.zero;
-            emptyObject.transform.rotation = Quaternion.identity;
-            emptyObject.transform.localScale = Vector3.one;
+            emptyObjTransform.SetParent(transform);
+            emptyObjTransform.position = Vector3.zero;
+            emptyObjTransform.rotation = Quaternion.identity;
+            emptyObjTransform.localScale = Vector3.one;
             emptyObject.name = name;
 
             return emptyObject;
@@ -86,12 +83,12 @@ namespace Assets.Scripts.Game.Level
         private GameObject CreateNewGameObject(string name, Transform parent)
         {
             GameObject emptyObject = new GameObject("EmptyObject");
+            Transform emptyObjTransform = emptyObject.transform;
 
-            emptyObject.transform.SetParent(transform);
-
-            emptyObject.transform.position = Vector3.zero;
-            emptyObject.transform.rotation = Quaternion.identity;
-            emptyObject.transform.localScale = Vector3.one;
+            emptyObjTransform.SetParent(parent);
+            emptyObjTransform.position = Vector3.zero;
+            emptyObjTransform.rotation = Quaternion.identity;
+            emptyObjTransform.localScale = Vector3.one;
             emptyObject.name = name;
 
             return emptyObject;

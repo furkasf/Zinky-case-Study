@@ -13,10 +13,10 @@ namespace Assets.Scripts.Game.Block
         public void CastRay()
         {
             Vector3 middlePoint = transform.position + transform.forward * 0.5f;
-
+                    
             Ray ray = new Ray(middlePoint, transform.TransformDirection(Vector3.forward));
             RaycastHit hit;
-            Debug.DrawRay(transform.position, transform.forward, Color.red);
+
             if (Physics.Raycast(ray, out hit, _maxRayDistance))
             {
                 if (hit.transform.CompareTag("Block"))
@@ -25,23 +25,20 @@ namespace Assets.Scripts.Game.Block
                     _cell = null;
                     _snapPos = transform.localPosition;
                 }
-                else if (hit.transform.CompareTag("GridCell"))
+                else if (hit.transform.TryGetComponent(out GridCellController gridCellController))
                 {
-                    if (hit.transform.TryGetComponent(out GridCellController gridCellController))
+                    _cell = gridCellController;
+
+                    if (_cell.State == GridCellState.Out && _cell != null)
                     {
-                        _cell = gridCellController;
+                        Vector3 cellPosition = _cell.transform.position;
 
-                        if (_cell.State == GridCellState.Out)
-                        {
-                            Vector3 cellPosition = _cell.transform.position;
+                        float round_x = Mathf.Round(cellPosition.x);
+                        float round_y = Mathf.Round(cellPosition.y);
+                        int offSet_z = -1;
 
-                            float round_x = Mathf.Round(cellPosition.x);
-                            float round_y = Mathf.Round(cellPosition.y);
-                            int offSet_z = -1;
-
-                            _isSnapAble = true;
-                            _snapPos = new Vector3(round_x, round_y, offSet_z);
-                        }
+                        _isSnapAble = true;
+                        _snapPos = new Vector3(round_x, round_y, offSet_z);
                     }
                 }
             }

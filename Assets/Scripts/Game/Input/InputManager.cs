@@ -1,13 +1,13 @@
 using Assets.Scripts.Game.Block;
-using Assets.Scripts.Game.Grid;
-using Assets.Scripts.Game.Level;
-using Assets.Scripts.Game.Spawner;
+using Game.Events;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.MyInput
 {
     public class InputManager : MonoBehaviour
     {
+        [SerializeField] private Camera _camera;
+
         private BlockManager _blockManager;
 
         private void OnEnable()
@@ -26,11 +26,11 @@ namespace Assets.Scripts.Game.MyInput
             {
                 SelectBlock();
             }
-            if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0))
             {
                 MoveBlock();
             }
-            if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(0))
             {
                 DropBlock();
             }
@@ -38,10 +38,8 @@ namespace Assets.Scripts.Game.MyInput
 
         private void SelectBlock()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
                 if (hit.transform.parent.TryGetComponent(out BlockManager blockManager))
                 {
@@ -59,7 +57,7 @@ namespace Assets.Scripts.Game.MyInput
             if (_blockManager != null)
             {
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 1);
-                _blockManager.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+                _blockManager.transform.position = _camera.ScreenToWorldPoint(mousePosition);
                 _blockManager.BlocksCastRay();
             }
         }

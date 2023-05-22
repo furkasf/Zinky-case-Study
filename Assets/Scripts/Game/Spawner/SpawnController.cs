@@ -7,7 +7,7 @@ namespace Assets.Scripts.Game.Spawner
     public class SpawnController : MonoBehaviour
     {
         private SpawnBlockData _data;
-        public BlockManager Block { get; private set; }
+        private BlockManager _block { get; set; }
 
         public bool IsNeedToSpawnBlock()
         {
@@ -17,8 +17,8 @@ namespace Assets.Scripts.Game.Spawner
 
         public void SpawnBlocks()
         {
-            GameObject block = Instantiate(_data.prefabs[Random.Range(0, _data.prefabs.Count)], transform);
-            Block = block.GetComponent<BlockManager>();
+            GameObject block = Instantiate(_data.Prefabs[Random.Range(0, _data.Prefabs.Count)], transform);
+            _block = block.GetComponent<BlockManager>();
         }
 
         public void SetData(ref SpawnBlockData data)

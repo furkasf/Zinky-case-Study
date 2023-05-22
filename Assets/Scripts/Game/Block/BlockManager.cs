@@ -5,13 +5,8 @@ namespace Assets.Scripts.Game.Block
 {
     public class BlockManager : MonoBehaviour
     {
-        [field: SerializeField]
         public int ObjectWidth { get; private set; }
-
-        [field: SerializeField]
         public int ObjectHeight { get; private set; }
-
-        [field: SerializeField]
         public BlockState State { get; private set; }
 
         private List<BlockController> _blocks = new List<BlockController>();
@@ -35,7 +30,6 @@ namespace Assets.Scripts.Game.Block
         public void BlocksCastRay()
         {
             foreach (var block in _blocks)
-
             {
                 block.CastRay();
             }
@@ -56,7 +50,7 @@ namespace Assets.Scripts.Game.Block
                     return;
                 }
             }
-            transform.parent = null;
+            transform.SetParent(null);
             State = BlockState.InSnap;
             _blocks.ForEach(block => { block.SnaptoGrid(); });
         }
