@@ -10,7 +10,6 @@ namespace Assets.Scripts.Game.Grid
     public class GridManager : MonoBehaviour
     {
         public List<IGrid> Grids = new List<IGrid>();
-
         public IGridPassable GridPassable;
 
         private void OnEnable()
@@ -29,11 +28,11 @@ namespace Assets.Scripts.Game.Grid
         {
             List<BlockManager> managers = SpawnSignal.onGetBlockManagers();
 
-            bool isLevelPassable = false;
+            bool isLevelPassable;
 
             for (int i = 0; i < managers.Count; i++)
             {
-                isLevelPassable = GridPassable.IsLevelPassAble(managers[i].ObjectWidth, managers[i].ObjectHeight);
+                isLevelPassable = GridPassable.IsLevelPassable(managers[i].ObjectWidth, managers[i].ObjectHeight);
 
                 if (isLevelPassable)
                 {

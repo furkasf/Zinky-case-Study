@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,8 +6,11 @@ namespace Assets.Scripts.Game.Block
 {
     public class BlockManager : MonoBehaviour
     {
+        [field: SerializeField]
         public int ObjectWidth { get; private set; }
+        [field: SerializeField]
         public int ObjectHeight { get; private set; }
+        
         public BlockState State { get; private set; }
 
         private List<BlockController> _blocks = new List<BlockController>();

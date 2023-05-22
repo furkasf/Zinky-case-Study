@@ -8,6 +8,13 @@ namespace Assets.Scripts.Game.Grid
     {
         public GridCellController[,] Cells;
 
+        private int _gridWidth;
+        private int _gridHeight;
+
+        private void Start()
+        {
+            GetGridSize();
+        }
         public List<GridCellController> GetBlocksDestroy()
         {
             int rows = Cells.GetLength(0);
@@ -67,44 +74,51 @@ namespace Assets.Scripts.Game.Grid
             return targetCells;
         }
 
-        public bool IsLevelPassAble(int width, int height)
+        public bool IsLevelPassable(int shapeWidth, int shapeHeight)
         {
-            int gridWidth = Cells.GetLength(0);
-            int gridHeight = Cells.GetLength(1);
-
-            for (int row = 0; row < gridHeight - width; row++)
+           for(int i = 0; i < _gridWidth ; i++)
             {
-                for (int col = 0; col < gridWidth - height; col++)
+                for(int j =0 ; j < _gridHeight ; j++)
                 {
-                    bool isSuitable = true;
-
-                    for (int startX = 0; startX < width; startX++)
-                    {
-                        for (int startY = 0; startY < height; startY++)
-                        {
-                            var gridCell = Cells[row + startX, col + startY];
-
-                            if (gridCell.State == GridCellState.In)
-                            {
-                                isSuitable = false;
-                                break;
-                            }
-                        }
-
-                        if (!isSuitable)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (isSuitable)
+                    if(IsShapeFit(i , j, shapeWidth, shapeHeight))
                     {
                         return true;
                     }
                 }
             }
-
-            return false;
+           return false;
         }
+
+        public bool IsShapeFit(int gridX, int GridY, int shapeWidth, int shapeHeight)
+        {
+
+            if (gridX + shapeWidth > _gridWidth || GridY + shapeHeight > _gridHeight)
+            {
+                return false;
+            }
+
+            for (int x = 0; x < shapeWidth; x++)
+            {
+                for (int y = 0; y < shapeHeight; y++)
+                {
+                    var gridCell = Cells[gridX + x, GridY + y];
+
+                    if (gridCell.State == GridCellState.In)
+                    {
+                        return false; // Collision with occupied cell
+                    }
+
+                }
+            }
+
+            return true;
+        }
+
+        private void GetGridSize()
+        {
+            _gridWidth = Cells.GetLength(0); 
+            _gridHeight = Cells.GetLength(1); 
+        }
+
     }
 }

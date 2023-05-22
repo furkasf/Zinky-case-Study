@@ -21,7 +21,7 @@ namespace Assets.Scripts.Game.GridCell
         {
             LevelSignal.onLevelReset += ResetBlock;
         }
-
+        
         private void OnDisable()
         {
             LevelSignal.onLevelReset -= ResetBlock;

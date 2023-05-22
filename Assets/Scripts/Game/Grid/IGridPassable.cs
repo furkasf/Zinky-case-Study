@@ -2,6 +2,6 @@
 {
     public interface IGridPassable
     {
-        public bool IsLevelPassAble(int width, int height);
+        public bool IsLevelPassable(int shapeWidth, int shapeHeight);
     }
 }

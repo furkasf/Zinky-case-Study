@@ -263,8 +263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ObjectWidth>k__BackingField: 2
-  <ObjectHeight>k__BackingField: 1
-  <State>k__BackingField: 1
+  <ObjectHeight>k__BackingField: 2
 --- !u!1 &5730531793578448963
 GameObject:
   m_ObjectHideFlags: 0

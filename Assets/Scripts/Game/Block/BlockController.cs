@@ -29,7 +29,7 @@ namespace Assets.Scripts.Game.Block
                 {
                     _cell = gridCellController;
 
-                    if (_cell.State == GridCellState.Out && _cell != null)
+                    if (_cell != null && _cell.State == GridCellState.Out)
                     {
                         Vector3 cellPosition = _cell.transform.position;
 
