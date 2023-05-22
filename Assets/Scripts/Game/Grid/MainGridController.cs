@@ -105,7 +105,7 @@ namespace Assets.Scripts.Game.Grid
 
                     if (gridCell.State == GridCellState.In)
                     {
-                        return false; // Collision with occupied cell
+                        return false; 
                     }
 
                 }

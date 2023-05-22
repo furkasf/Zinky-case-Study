@@ -1,5 +1,6 @@
 using Assets.Scripts.Game.Block;
 using Game.Events;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Game.MyInput
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Game.MyInput
         [SerializeField] private Camera _camera;
 
         private BlockManager _blockManager;
+        private YieldInstruction _delayInstraction = new WaitForSeconds(0.25f);
+        private Coroutine _dropBlock;
 
         private void OnEnable()
         {
@@ -24,6 +27,7 @@ namespace Assets.Scripts.Game.MyInput
         {
             if (Input.GetMouseButtonDown(0))
             {
+                StopDropCoroutine();
                 SelectBlock();
             }
             else if (Input.GetMouseButton(0))
@@ -32,7 +36,7 @@ namespace Assets.Scripts.Game.MyInput
             }
             else if (Input.GetMouseButtonUp(0))
             {
-                DropBlock();
+                StartDropCoroutine();
             }
         }
 
@@ -62,15 +66,40 @@ namespace Assets.Scripts.Game.MyInput
             }
         }
 
-        private void DropBlock()
+        private void StartDropCoroutine()
         {
-            if (_blockManager == null) return;
+            if (_dropBlock == null)
+            {
+                _dropBlock = StartCoroutine(DropBlock());
+            }
+            else
+            {
+                StopCoroutine(DropBlock());
+                _dropBlock = StartCoroutine(DropBlock());
+            }
+        }
+
+        private void StopDropCoroutine()
+        {
+            if (_dropBlock != null)
+            {
+                StopCoroutine(DropBlock());
+                _dropBlock = null;
+            }
+        }
+
+        private IEnumerator DropBlock()
+        {
+            if (_blockManager == null) yield break;
 
             _blockManager.SnapBlocks();
             _blockManager = null;
 
             SpawnSignal.onSpawnNewBlock();
             GridSignals.onDestroyDestroyableBlocks();
+
+            yield return _delayInstraction;
+
             GridSignals.onIsLevelPassable();
         }
 

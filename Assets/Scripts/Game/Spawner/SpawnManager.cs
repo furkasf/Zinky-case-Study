@@ -24,6 +24,7 @@ namespace Assets.Scripts.Game.Spawner
         {
             SpawnSignal.onSpawnNewBlock += SpawnNewBlock;
             SpawnSignal.onGetBlockManagers += GetBlockManagers;
+            SpawnSignal.onDestroyAllBlocks += DestroyAllBlocks;
             LevelSignal.onLevelReset += ResetAction;
         }
 
@@ -31,6 +32,7 @@ namespace Assets.Scripts.Game.Spawner
         {
             SpawnSignal.onSpawnNewBlock -= SpawnNewBlock;
             SpawnSignal.onGetBlockManagers -= GetBlockManagers;
+            SpawnSignal.onDestroyAllBlocks += DestroyAllBlocks;
             LevelSignal.onLevelReset -= ResetAction;
         }
 
@@ -84,6 +86,14 @@ namespace Assets.Scripts.Game.Spawner
             foreach (SpawnController controller in spawnControllers)
             {
                 controller.SetData(ref data);
+            }
+        }
+
+        private void DestroyAllBlocks()
+        {
+            foreach (var bloc in GetBlockManagers())
+            {
+                Destroy(bloc.gameObject);
             }
         }
 

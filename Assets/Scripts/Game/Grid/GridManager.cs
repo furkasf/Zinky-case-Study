@@ -39,7 +39,7 @@ namespace Assets.Scripts.Game.Grid
                     return;
                 }
             }
-            LevelSignal.onLevelReset();
+            LevelSignal.onOpenRestartPanel();
         }
 
         public void DestroyDestroyableBlocks()

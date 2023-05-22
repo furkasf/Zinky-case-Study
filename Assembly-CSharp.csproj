@@ -74,6 +74,7 @@
     <Compile Include="Assets\Scripts\Game\Events\SpawnSignal.cs" />
     <Compile Include="Assets\Scripts\Game\Events\GridSignals.cs" />
     <Compile Include="Assets\Scripts\Game\Events\LevelSignal.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
