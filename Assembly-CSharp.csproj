@@ -57,7 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Game\Level\SudokuBlockGenerator.cs" />
+    <Compile Include="Assets\Scripts\Game\Events\LevelSignal.cs" />
     <Compile Include="Assets\Scripts\Game\Grid\GridManager.cs" />
+    <Compile Include="Assets\Scripts\Game\Events\SpawnSignal.cs" />
     <Compile Include="Assets\Scripts\Game\Block\BlockManager.cs" />
     <Compile Include="Assets\Scripts\Game\Block\BlockState.cs" />
     <Compile Include="Assets\Scripts\Game\Spawner\SpawnBlockData.cs" />
@@ -65,16 +67,14 @@
     <Compile Include="Assets\Scripts\Game\Grid\MainGridController.cs" />
     <Compile Include="Assets\Scripts\Game\GridCell\GridCellState.cs" />
     <Compile Include="Assets\Scripts\Game\Spawner\SpawnManager.cs" />
+    <Compile Include="Assets\Scripts\Game\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\Game\Block\BlockController.cs" />
+    <Compile Include="Assets\Scripts\Game\Events\GridSignals.cs" />
     <Compile Include="Assets\Scripts\Game\Spawner\SpawnController.cs" />
     <Compile Include="Assets\Scripts\Game\Grid\SubGridController.cs" />
     <Compile Include="Assets\Scripts\Game\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Game\Grid\IGridPassable.cs" />
     <Compile Include="Assets\Scripts\Game\GridCell\GridCellController.cs" />
-    <Compile Include="Assets\Scripts\Game\Events\SpawnSignal.cs" />
-    <Compile Include="Assets\Scripts\Game\Events\GridSignals.cs" />
-    <Compile Include="Assets\Scripts\Game\Events\LevelSignal.cs" />
-    <Compile Include="Assets\Scripts\Game\UI\UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

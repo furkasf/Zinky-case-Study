@@ -26,7 +26,7 @@ namespace Assets.Scripts.Game.Grid
 
         public void IsLevelPassable()
         {
-            List<BlockManager> managers = SpawnSignal.onGetBlockManagers();
+            List<BlockManager> managers = SpawnSignal.onGetBlockManagers?.Invoke();
 
             bool isLevelPassable;
 
@@ -39,7 +39,7 @@ namespace Assets.Scripts.Game.Grid
                     return;
                 }
             }
-            LevelSignal.onOpenRestartPanel();
+            LevelSignal.onOpenRestartPanel?.Invoke();
         }
 
         public void DestroyDestroyableBlocks()
@@ -56,9 +56,9 @@ namespace Assets.Scripts.Game.Grid
                 }
             }
 
-            var filteredList = targets.Distinct().ToList();
+            List<GridCellController> filteredList = targets.Distinct().ToList();
 
-            foreach (var target in filteredList)
+            foreach (GridCellController target in filteredList)
             {
                 target.DestroyBlock();
             }

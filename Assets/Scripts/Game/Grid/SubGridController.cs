@@ -12,7 +12,7 @@ namespace Assets.Scripts.Game.Grid
         {
             List<GridCellController> targetCells = new List<GridCellController>();
 
-            foreach (var cell in Cells)
+            foreach (GridCellController cell in Cells)
             {
                 if (cell.State == GridCell.GridCellState.Out)
                 {
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Game.Grid
                 }
             }
 
-            foreach (var cell in Cells)
+            foreach (GridCellController cell in Cells)
             {
                 targetCells.Add(cell);
             }

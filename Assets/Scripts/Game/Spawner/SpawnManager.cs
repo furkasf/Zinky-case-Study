@@ -7,7 +7,7 @@ namespace Assets.Scripts.Game.Spawner
 {
     public class SpawnManager : MonoBehaviour
     {
-        private List<SpawnController> spawnControllers = new List<SpawnController>();
+        private List<SpawnController> _spawnControllers = new List<SpawnController>();
 
         private void Awake()
         {
@@ -40,35 +40,35 @@ namespace Assets.Scripts.Game.Spawner
         {
             foreach (Transform t in transform)
             {
-                spawnControllers.Add(t.GetComponent<SpawnController>());
+                _spawnControllers.Add(t.GetComponent<SpawnController>());
             }
         }
 
-        private bool IsEmty()
+        private bool IsEmpty()
         {
-            for (int i = 0; i < spawnControllers.Count; i++)
+            for (int i = 0; i < _spawnControllers.Count; i++)
             {
-                if (spawnControllers[i].IsNeedToSpawnBlock() == false) return false;
+                if (_spawnControllers[i].IsNeedToSpawnBlock() == false) return false;
             }
             return true;
         }
 
         private void SpawnNewBlock()
         {
-            if (IsEmty() == true)
+            if (IsEmpty() == true)
             {
-                foreach (var Spawner in spawnControllers)
+                foreach (SpawnController spawner in _spawnControllers)
                 {
-                    Spawner.SpawnBlocks();
+                    spawner.SpawnBlocks();
                 }
             }
         }
 
-        public List<BlockManager> GetBlockManagers()
+        private List<BlockManager> GetBlockManagers()
         {
             List<BlockManager> managers = new List<BlockManager>();
 
-            foreach (var spawn in spawnControllers)
+            foreach (SpawnController spawn in _spawnControllers)
             {
                 if (spawn.transform.childCount > 0)
                 {
@@ -83,7 +83,7 @@ namespace Assets.Scripts.Game.Spawner
         {
             SpawnBlockData data = Resources.Load<SpawnBlockData>("SpawnData");
 
-            foreach (SpawnController controller in spawnControllers)
+            foreach (SpawnController controller in _spawnControllers)
             {
                 controller.SetData(ref data);
             }
@@ -91,7 +91,7 @@ namespace Assets.Scripts.Game.Spawner
 
         private void DestroyAllBlocks()
         {
-            foreach (var bloc in GetBlockManagers())
+            foreach (BlockManager bloc in GetBlockManagers())
             {
                 Destroy(bloc.gameObject);
             }
@@ -99,13 +99,13 @@ namespace Assets.Scripts.Game.Spawner
 
         private void ResetAction()
         {
-            foreach (var bloc in GetBlockManagers())
+            foreach (BlockManager bloc in GetBlockManagers())
             {
                 Destroy(bloc.gameObject);
             }
-            foreach (var Spawner in spawnControllers)
+            foreach (SpawnController spawner in _spawnControllers)
             {
-                Spawner.SpawnBlocks();
+                spawner.SpawnBlocks();
             }
         }
     }

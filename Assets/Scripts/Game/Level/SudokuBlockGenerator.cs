@@ -49,7 +49,7 @@ namespace Assets.Scripts.Game.Level
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    GameObject subGridController = CreateNewGameObject("SubGridController", manager.transform);//can be add parent
+                    GameObject subGridController = CreateNewGameObject("SubGridController", manager.transform);
                     SubGridController subgrid = subGridController.AddComponent<SubGridController>();
 
                     subgrid.Cells = new GridCellController[3, 3];

@@ -14,20 +14,20 @@ namespace Assets.Scripts.Game.UI
 
         private void OnDisable()
         {
-            LevelSignal.onOpenRestartPanel += OpenRestartPanel;
+            LevelSignal.onOpenRestartPanel -= OpenRestartPanel;
         }
 
         private void OpenRestartPanel()
         {
-            SpawnSignal.onDestroyAllBlocks();
+            SpawnSignal.onDestroyAllBlocks?.Invoke();
             _restartPanel.SetActive(true);
         }
 
         public void CloseResetPanel()
         {
             _restartPanel.SetActive(false);
-            LevelSignal.onLevelReset();
-            SpawnSignal.onSpawnNewBlock();
+            LevelSignal.onLevelReset?.Invoke();
+            SpawnSignal.onSpawnNewBlock?.Invoke();
         }
     }
 }

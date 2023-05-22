@@ -9,12 +9,18 @@ namespace Assets.Scripts.Game.Block
         private bool _isSnapAble;
         private Vector3 _snapPos;
         private GridCellController _cell;
+        private Transform _myTransform;
+
+        private void Awake()
+        {
+            _myTransform = transform;
+        }
 
         public void CastRay()
         {
-            Vector3 middlePoint = transform.position + transform.forward * 0.5f;
-                    
-            Ray ray = new Ray(middlePoint, transform.TransformDirection(Vector3.forward));
+            Vector3 middlePoint = _myTransform.position + _myTransform.forward * 0.5f;
+
+            Ray ray = new Ray(middlePoint, _myTransform.TransformDirection(Vector3.forward));
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, _maxRayDistance))
@@ -23,7 +29,7 @@ namespace Assets.Scripts.Game.Block
                 {
                     _isSnapAble = false;
                     _cell = null;
-                    _snapPos = transform.localPosition;
+                    _snapPos = _myTransform.localPosition;
                 }
                 else if (hit.transform.TryGetComponent(out GridCellController gridCellController))
                 {
@@ -49,7 +55,7 @@ namespace Assets.Scripts.Game.Block
         public void SnaptoGrid()
         {
             _cell.AttachToBlock(this);
-            transform.position = _snapPos;
+            _myTransform.position = _snapPos;
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Assets.Scripts.Game.Grid
            return false;
         }
 
-        public bool IsShapeFit(int gridX, int GridY, int shapeWidth, int shapeHeight)
+        private bool IsShapeFit(int gridX, int GridY, int shapeWidth, int shapeHeight)
         {
 
             if (gridX + shapeWidth > _gridWidth || GridY + shapeHeight > _gridHeight)

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Game.MyInput
         [SerializeField] private Camera _camera;
 
         private BlockManager _blockManager;
-        private YieldInstruction _delayInstraction = new WaitForSeconds(0.25f);
+        private YieldInstruction _delayInstruction = new WaitForSeconds(0.25f);
         private Coroutine _dropBlock;
 
         private void OnEnable()
@@ -27,7 +27,6 @@ namespace Assets.Scripts.Game.MyInput
         {
             if (Input.GetMouseButtonDown(0))
             {
-                StopDropCoroutine();
                 SelectBlock();
             }
             else if (Input.GetMouseButton(0))
@@ -79,15 +78,6 @@ namespace Assets.Scripts.Game.MyInput
             }
         }
 
-        private void StopDropCoroutine()
-        {
-            if (_dropBlock != null)
-            {
-                StopCoroutine(DropBlock());
-                _dropBlock = null;
-            }
-        }
-
         private IEnumerator DropBlock()
         {
             if (_blockManager == null) yield break;
@@ -95,12 +85,12 @@ namespace Assets.Scripts.Game.MyInput
             _blockManager.SnapBlocks();
             _blockManager = null;
 
-            SpawnSignal.onSpawnNewBlock();
-            GridSignals.onDestroyDestroyableBlocks();
+            SpawnSignal.onSpawnNewBlock?.Invoke();
+            GridSignals.onDestroyDestroyableBlocks?.Invoke();
 
-            yield return _delayInstraction;
+            yield return _delayInstruction;
 
-            GridSignals.onIsLevelPassable();
+            GridSignals.onIsLevelPassable?.Invoke();
         }
 
         private void ResetReferences()

@@ -15,9 +15,11 @@ namespace Assets.Scripts.Game.Block
 
         private List<BlockController> _blocks = new List<BlockController>();
         private Vector3 _startPos;
+        private Transform _myTransform;
 
         private void Start()
         {
+            _myTransform = transform;
             State = BlockState.UnSnap;
             GetAllBlocks();
             _startPos = transform.parent.position;
@@ -33,7 +35,7 @@ namespace Assets.Scripts.Game.Block
 
         public void BlocksCastRay()
         {
-            foreach (var block in _blocks)
+            foreach (BlockController block in _blocks)
             {
                 block.CastRay();
             }
@@ -43,7 +45,7 @@ namespace Assets.Scripts.Game.Block
         {
             if (IsBlocksAreSnapable() == false)
             {
-                transform.localPosition = Vector3.zero;
+                _myTransform.localPosition = Vector3.zero;
                 return;
             }
 
@@ -54,21 +56,21 @@ namespace Assets.Scripts.Game.Block
                     return;
                 }
             }
-            transform.SetParent(null);
+            _myTransform.SetParent(null);
             State = BlockState.InSnap;
             _blocks.ForEach(block => { block.SnaptoGrid(); });
         }
 
         public void RetutnBackToInitialPos()
         {
-            transform.position = _startPos;
+            _myTransform.position = _startPos;
         }
 
         private bool IsBlocksAreSnapable()
         {
-            for (int i = 0; i < _blocks.Count; i++)
+            foreach(BlockController block in _blocks)
             {
-                if (_blocks[i].IsSnapAble() == false)
+                if (block.IsSnapAble() == false)
                 {
                     return false;
                 }
